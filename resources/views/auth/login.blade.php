@@ -88,7 +88,7 @@
                 </p>
                 <p class="mb-0">
                     @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="text-center">{{ __('Register') }}</a>
+                    <a href="{{ url('\school') }}" class="text-center">{{ __('Register') }}</a>
                     @endif
                 </p>
             </div>

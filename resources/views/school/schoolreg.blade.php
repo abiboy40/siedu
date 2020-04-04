@@ -54,7 +54,8 @@
                     <div class="card">
                         <div class="card-header card-fuchsia text-center">{{ __('School Registration') }}</div>
                         <div class="card-body">
-                            <form>
+                            <form method="post" action="{{ url('school') }}">
+                                @csrf
                                 <div class="form-group">
                                     <label for="name">School Name</label>
                                     <input type="text" class="form-control" id="name" name="name">

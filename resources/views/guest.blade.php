@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>AdminLTE 3 | Top Navigation</title>
+    <title>SI EDU</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="/adminlte/plugins/fontawesome-free/css/all.min.css">
@@ -65,7 +65,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         @if (Route::has('register'))
                         <li class="nav-item">
                             <!-- <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a> -->
-                            <a class="nav-link" href="\school">{{ __(' School Register') }}</a>
+                            <a class="nav-link" href="{{ url('\school') }}">{{ __(' School Register') }}</a>
                         </li>
                         @endif
                         @else

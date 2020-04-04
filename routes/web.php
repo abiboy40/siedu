@@ -23,3 +23,4 @@ Auth::routes();
 Route::get('/dashboard', 'HomeController@index');
 Route::get('/staff', 'HomeController@staff');
 Route::get('/school', 'SchoolController@index');
+Route::post('/school', 'SchoolController@store');
