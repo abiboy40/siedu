@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\User;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-
 use function GuzzleHttp\Promise\all;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -28,12 +30,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        if (Auth::check()) {
-            $user = User::all();
-            return view('dashboard');
-        } else {
-            return Redirect('/');
-        }
+        return view('dashboard');
     }
 
     public function staff()

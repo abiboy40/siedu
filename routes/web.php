@@ -20,7 +20,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/dashboard', 'HomeController@index');
+Route::get('/dashboard', 'HomeController@index')->middleware('auth');
 Route::get('/staff', 'HomeController@staff');
 Route::get('/school', 'SchoolController@index');
+Route::get('/menu', 'MenuController@getSubMenu');
 Route::post('/school', 'SchoolController@store');

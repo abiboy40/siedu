@@ -58,46 +58,58 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="name">School Name</label>
-                                    <input type="text" class="form-control" id="name" name="name">
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}">
+
+                                    @error('name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputAddress">Address</label>
-                                    <input type="text" class="form-control" id="inputAddress" name="address">
+                                    <label for="address">Address</label>
+                                    <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') }}">
+
+                                    @error('address')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label for="telp">Telp</label>
-                                        <input type="text" class="form-control" id="telp" name="telp">
+                                        <input type="text" class="form-control" id="telp" name="telp" value="{{ old('telp') }}">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="telp2">Telp 2</label>
-                                        <input type="text" class="form-control" id="telp2" name="telp2">
+                                        <input type="text" class="form-control" id="telp2" name="telp2" value="{{ old('telp2') }}">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="fax">Fax</label>
-                                        <input type="text" class="form-control" id="fax" name="fax">
+                                        <input type="text" class="form-control" id="fax" name="fax" value="{{ old('fax') }}">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label for="email">Email</label>
-                                        <input type="email" class="form-control" id="email" name="email">
+                                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email">
+
+                                        @error('email')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="curriculum">Curriculum</label>
                                         <select id="curriculum" class="form-control" name="curriculum">
-                                            <option selected>Choose...</option>
+                                            <option>Choose...</option>
                                             <option>Kurikulum 2013</option>
                                             <option>Cambridge</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label for="numstaff">Num of Staff</label>
-                                        <input type="text" class="form-control" id="numstaff" name="numstaff">
+                                        <input type="text" class="form-control" id="numstaff" name="numstaff" value="{{ old('numstaff') }}">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label for="numstud">Num of Student</label>
-                                        <input type="text" class="form-control" id="numstud" name="numstud">
+                                        <input type="text" class="form-control" id="numstud" name="numstud" value="{{ old('numstud') }}">
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Register</button>

@@ -26,6 +26,7 @@ class SchoolController extends Controller
         ]);
 
         School::create($request->all());
+
         return redirect('/register');
     }
 }

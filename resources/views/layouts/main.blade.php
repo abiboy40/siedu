@@ -54,7 +54,7 @@
                 @else
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }} <span class="caret"></span>
+                        {{ Auth::user()->name }}<span class="caret"></span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -94,110 +94,45 @@
                 </div>
 
                 <!-- Sidebar Menu -->
+                @php
+                $menu = DB::table('menus')
+                ->join('useraccesses', 'menus.id', '=', 'useraccesses.menu_id')
+                ->select('menus.id','menus.name', 'menus.icon',)
+                ->where('useraccesses.role_id', '=', Auth::user()->role_id)
+                ->where('menus.is_active','=',1)->distinct()->get();
+
+                @endphp
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+                            with font-awesome or any other icon font library -->
+                        @foreach($menu as $mn)
+                        <li class="nav-header">
+                            <i class="{{ $mn->icon }} nav-icon"></i>
+                            <span>{{ $mn->name }}</span>
+                        </li>
+
+                        @php
+                        $menuid = $mn->id;
+                        $submenu = DB::table('submenus')
+                        ->join('menus', 'submenus.menu_id','=', 'menus.id')
+                        ->select('submenus.name', 'submenus.icon', 'submenus.url','submenus.menu_id')
+                        ->where('submenus.menu_id', '=', $menuid)
+                        ->where('submenus.is_active', '=', 1)->get();
+                        @endphp
+
+                        @foreach($submenu as $sm)
+
                         <li class="nav-item">
-                            <a href="/home" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Dashboard
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
+                            <a href="{{ $sm->url }}" class="nav-link">
+                                <i class="{{ $sm->icon }} nav-icon"></i>
+                                <p>{{ $sm->name }}</p>
                             </a>
                         </li>
-                        <li class="nav-header">APPLICATION MANAGEMENT</li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    App Admin
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="../../index.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>User Management</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../../index.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Menu Management</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../../index.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Submenu Management</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../../index.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Role Management</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../../index.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>User Access</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-header">SCHOOL MANAGEMENT</li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-copy"></i>
-                                <p>
-                                    School Admin
-                                    <i class="fas fa-angle-left right"></i>
-                                    <span class="badge badge-info right">6</span>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="../layout/top-nav.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Teachers & Staff</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../layout/top-nav.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Students</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../layout/top-nav.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Subject</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../layout/top-nav.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Classroom</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../layout/top-nav.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Attendance</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="../layout/top-nav.html" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Finance</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+
+                        @endforeach
+
+                        @endforeach
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -243,8 +178,7 @@
     <script src="/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="/adminlte/js/adminlte.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="/adminlte/js/demo.js"></script>
+
 </body>
 
 </html>
