@@ -75,7 +75,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <label for="telp">Telp</label>
-                                        <input type="text" class="form-control" id="telp" name="telp" value="{{ old('telp') }}">
+                                        <input type="text" class="form-control" id="telp1" name="telp1" value="{{ old('telp1') }}">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="telp2">Telp 2</label>
@@ -104,12 +104,12 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label for="numstaff">Num of Staff</label>
-                                        <input type="text" class="form-control" id="numstaff" name="numstaff" value="{{ old('numstaff') }}">
+                                        <label for="num_of_Staff">Num of Staff</label>
+                                        <input type="text" class="form-control" id="num_of_Staff" name="num_of_Staff" value="{{ old('num_of_Staff') }}">
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label for="numstud">Num of Student</label>
-                                        <input type="text" class="form-control" id="numstud" name="numstud" value="{{ old('numstud') }}">
+                                        <label for="num_of_student">Num of Student</label>
+                                        <input type="text" class="form-control" id="num_of_student" name="num_of_student" value="{{ old('num_of_student') }}">
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Register</button>

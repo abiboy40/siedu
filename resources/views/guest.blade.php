@@ -65,7 +65,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         @if (Route::has('register'))
                         <li class="nav-item">
                             <!-- <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a> -->
-                            <a class="nav-link" href="{{ url('\school') }}">{{ __(' School Register') }}</a>
+                            <a class="nav-link" href="{{ url('school') }}">{{ __(' School Register') }}</a>
                         </li>
                         @endif
                         @else
