@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\role');
     }
+
+    public function teacher()
+    {
+        return $this->hasOne('App\Models\teacher');
+    }
 }

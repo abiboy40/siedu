@@ -1,9 +1,19 @@
 @extends('layouts.main')
-@section('title','Staff Sekolah')
+
 @section('content')
 <!-- Main content -->
 <section class="content">
-
+    <div class="row">
+        <div class="col-11">
+            <h3>Contacts</h3>
+        </div>
+        <div class="col-1">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+                <i class="far fa-plus-square"></i>
+            </button>
+        </div>
+    </div>
     <!-- Default box -->
     <div class="card card-solid">
         <div class="card-body pb-0">
@@ -65,4 +75,75 @@
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<!-- Modal -->
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">New Staff</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" action="#" method="post">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="nip">Employee Id</label>
+                            <input type="text" class="form-control" id="nip" name="nip" value="{{ old('nip') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Employee Name</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" name="address" value="{{ old('address') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="telp">Telp</label>
+                                <input type="text" class="form-control" id="telp" name="telp" value="{{ old('telp') }}">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="telp2">Telp 2</label>
+                                <input type="text" class="form-control" id="telp2" name="telp2" value="{{ old('telp2') }}">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="fax">Status</label>
+                                <select id="Status" class="form-control" name="curriculum">
+                                    <option>Choose...</option>
+                                    <option value="permanent">permanent</option>
+                                    <option value="Honorer">Honorer</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">Avatar</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="exampleInputFile">
+                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                </div>
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="">Upload</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

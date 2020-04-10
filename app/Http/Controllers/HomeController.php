@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\User;
-use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use function GuzzleHttp\Promise\all;
-use Illuminate\Support\Facades\DB;
+use App\Models\Role;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -30,11 +29,25 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        return view('dashboard');
+        return view('admin.dashboard');
     }
 
     public function staff()
     {
-        return view('staff.teacher');
+        return view('school.teacher');
+    }
+
+    public function profile($id)
+    {
+        $role = Auth::user()->role_id;
+        // dd($role);
+        if ($role == 1) {
+            $data = User::find($id);
+            return view('/profile', ['data' => $data]);
+        } elseif ($role == 2 || $role == 3 || $role == 5) {
+            return Redirect('/teacher/' . $id);
+        }
+
+        return redirect('/student/$id');
     }
 }

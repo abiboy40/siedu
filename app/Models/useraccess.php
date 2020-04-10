@@ -6,10 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class useraccess extends Model
 {
-    public function menu()
-    {
-        return $this->belongsToMany('menu');
-    }
+
+    protected $fillable = ['role_id', 'submenu_id'];
 
     public function submenu()
     {

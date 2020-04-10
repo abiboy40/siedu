@@ -54,13 +54,17 @@
                 @else
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }}<span class="caret"></span>
+                        <span class="caret">{{ Auth::user()->name }}</span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/profile/{{ Auth::user()->id }}">
+                            <i class="far fa-id-card"></i>
+                            <b> Profile</b> </a>
+                        <hr>
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                            <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -76,7 +80,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="../../index3.html" class="brand-link">
+            <a href="#" class="brand-link">
                 <img src="/adminlte/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">SI Edu</span>
             </a>
@@ -89,17 +93,13 @@
                         <img src="/adminlte/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                        <a href="/profile/{{ Auth::user()->id }}" class="d-block">{{ Auth::user()->name }}</a>
                     </div>
                 </div>
 
                 <!-- Sidebar Menu -->
                 @php
-                $menu = DB::table('menus')
-                ->join('useraccesses', 'menus.id', '=', 'useraccesses.menu_id')
-                ->select('menus.id','menus.name', 'menus.icon',)
-                ->where('useraccesses.role_id', '=', Auth::user()->role_id)
-                ->where('menus.is_active','=',1)->distinct()->get();
+                $menu = DB::table('menus')->where('menus.is_active','=',1)->get();
 
                 @endphp
                 <nav class="mt-2">
@@ -116,8 +116,10 @@
                         $menuid = $mn->id;
                         $submenu = DB::table('submenus')
                         ->join('menus', 'submenus.menu_id','=', 'menus.id')
+                        ->join('useraccesses', 'useraccesses.submenu_id', '=', 'submenus.id')
                         ->select('submenus.name', 'submenus.icon', 'submenus.url','submenus.menu_id')
                         ->where('submenus.menu_id', '=', $menuid)
+                        ->where('useraccesses.role_id','=', Auth::user()->role_id)
                         ->where('submenus.is_active', '=', 1)->get();
                         @endphp
 

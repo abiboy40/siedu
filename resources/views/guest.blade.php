@@ -65,7 +65,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         @if (Route::has('register'))
                         <li class="nav-item">
                             <!-- <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a> -->
-                            <a class="nav-link" href="{{ url('\school') }}">{{ __(' School Register') }}</a>
+                            <a class="nav-link" href="{{ route('schoolreg') }}">{{ __(' School Register') }}</a>
                         </li>
                         @endif
                         @else
@@ -170,15 +170,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
                         <!-- /.col-md-6 -->
                         <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5 class="card-title m-0">Featured</h5>
+                            <div class="timeline-item">
+                                <div class="timeline-body">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tMWkeBIohBs" frameborder="0" allowfullscreen=""></iframe>
+                                    </div>
                                 </div>
-                                <div class="card-body">
-                                    <h6 class="card-title">Special title treatment</h6>
-
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                                <div class="timeline-footer">
+                                    <br>
                                 </div>
                             </div>
 

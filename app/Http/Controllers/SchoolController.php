@@ -25,8 +25,8 @@ class SchoolController extends Controller
             'email'     => 'email:rfc,dns'
         ]);
 
-        School::create($request->all());
+        $school = School::create($request->all());
 
-        return redirect('/register');
+        return view('auth.register', ['data' => $school]);
     }
 }
