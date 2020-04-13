@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class useraccess extends Model
 {
 
-    protected $fillable = ['role_id', 'submenu_id'];
+    protected $fillable = ['role_id', 'menu_id', 'submenu_id'];
+
+    public function menu()
+    {
+        return $this->belongsToMany('menu');
+    }
 
     public function submenu()
     {

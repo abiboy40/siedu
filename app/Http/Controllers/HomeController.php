@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use function GuzzleHttp\Promise\all;
 use App\Models\Role;
+use App\Models\Teacher;
 use App\Models\User;
 
 class HomeController extends Controller
@@ -34,7 +35,8 @@ class HomeController extends Controller
 
     public function staff()
     {
-        return view('school.teacher');
+        $teacher = Teacher::all();
+        return view('school.teacher', compact('teacher'));
     }
 
     public function profile($id)

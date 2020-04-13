@@ -11,4 +11,9 @@ class School extends Model
         'name', 'address', 'telp1', 'telp2', 'fax', 'email', 'curriculum',
         'num_of_student', 'num_of_staff'
     ];
+
+    public function teacher()
+    {
+        return $this->hasMany('App\Models\Teacher');
+    }
 }

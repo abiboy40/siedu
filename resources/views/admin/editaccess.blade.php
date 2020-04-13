@@ -22,9 +22,10 @@
                             <label for="menulist"></label>
                             <select class="form-control" name="menulist" id="menulist">
                                 @foreach($allmenu as $all)
-                                <option value="{{ $all->id }}">{{ $all->name }}</option>
+                                <option data-id="{{ $all->menu_id }}" value="{{ $all->id }}">{{ $all->name }}</option>
                                 @endforeach
                             </select>
+                            <input type="hidden" id="txtmenu" name="txtmenu">
                         </div>
                         <button type="submit" class="badge badge-success pt-1">Add</button>
                     </form>

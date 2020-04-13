@@ -51,6 +51,7 @@
                             <form method="POST" action="{{ route('register') }}">
                                 @csrf
                                 <input type="hidden" name='schoolid' id="schoolid" value="{{$data->id}}">
+                                <input type="hidden" name='departement' id="departement" value="Administration">
                                 <div class="form-group row">
                                     <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
                                     <div class="col-md-6">

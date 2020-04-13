@@ -77,9 +77,10 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'school_id' => $data['schoolid'],
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'departement' => $data['departement']
         ]);
 
-        return  $user;
+        return  redirect('/login');
     }
 }

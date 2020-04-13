@@ -99,7 +99,11 @@
 
                 <!-- Sidebar Menu -->
                 @php
-                $menu = DB::table('menus')->where('menus.is_active','=',1)->get();
+                $menu = DB::table('menus')
+                ->join('useraccesses', 'useraccesses.menu_id', '=', 'menus.id')
+                ->select('menus.id', 'menus.name', 'menus.icon')
+                ->where('useraccesses.role_id','=', Auth::user()->role_id)
+                ->where('menus.is_active','=',1)->distinct()->get();
 
                 @endphp
                 <nav class="mt-2">
@@ -180,6 +184,14 @@
     <script src="/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="/adminlte/js/adminlte.min.js"></script>
+
+    <script type="text/javascript">
+        $("#menulist").on("change", function() {
+            var menuId = $("#menulist option:selected").attr("data-id");
+
+            $("#txtmenu").val(menuId);
+        });
+    </script>
 
 </body>
 
