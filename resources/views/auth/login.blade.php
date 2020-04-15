@@ -23,13 +23,13 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="">SI<b> Edu</b></a>
+            <img src="/adminlte/img/SIEdu_logo.png" alt="SiEdu Logo" class="brand-image img-circle elevation-3">
+            <!-- <a href="">SI<b> Edu</b></a> -->
         </div>
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Login</p>
-
                 <form action="{{ route('login') }}" method="post">
                     @csrf
                     <div class="input-group mb-3">
@@ -64,7 +64,6 @@
                         <div class="col-8">
                             <div class="icheck-primary">
                                 <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
                                 <label class="form-check-label" for="remember">
                                     {{ __('Remember Me') }}
                                 </label>

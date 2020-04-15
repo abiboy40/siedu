@@ -61,13 +61,12 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
+        $data = role::find($id);
         $submenu = DB::table('useraccesses')
             ->join('submenus', 'useraccesses.submenu_id', '=', 'submenus.id')
             ->select('useraccesses.role_id', 'submenus.name', 'submenus.icon', 'submenus.url', 'useraccesses.id')
             ->where('submenus.is_active', '=', 1)
             ->where('useraccesses.role_id', '=', $id)->get();
-        // dd($submenu);
-        $data = role::find($id);
         $allmenu = Submenu::where('is_active', 1)->get();
 
         return view('admin.editaccess', ['data' => $data, 'menu' => $submenu, 'allmenu' => $allmenu]);
@@ -94,5 +93,17 @@ class RoleController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function deactivated($id)
+    {
+        Role::where('id', $id)->update(['is_active' => 0]);
+        return back();
+    }
+
+    public function activated($id)
+    {
+        Role::where('id', $id)->update(['is_active' => 1]);
+        return back();
     }
 }

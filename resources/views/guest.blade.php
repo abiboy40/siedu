@@ -26,8 +26,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
             <div class="container">
-                <a href="../../index3.html" class="navbar-brand">
-                    <img src="/adminlte/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <a href="/dashboard" class="navbar-brand">
+                    <img src="/adminlte/img/SIEdu_logo128.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                     <span class="brand-text font-weight-light">Si Edu</span>
                 </a>
 
@@ -99,7 +99,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content-header -->
-
             <!-- Main content -->
             <div class="content">
                 <div class="container">

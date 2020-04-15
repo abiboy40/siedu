@@ -80,8 +80,8 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="#" class="brand-link">
-                <img src="/adminlte/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <a href="/" class="brand-link">
+                <img src="/adminlte/img/SIEdu_logo128.png" alt="SiEdu Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">SI Edu</span>
             </a>
 
@@ -124,7 +124,8 @@
                         ->select('submenus.name', 'submenus.icon', 'submenus.url','submenus.menu_id')
                         ->where('submenus.menu_id', '=', $menuid)
                         ->where('useraccesses.role_id','=', Auth::user()->role_id)
-                        ->where('submenus.is_active', '=', 1)->get();
+                        ->where('submenus.is_active', '=', 1)
+                        ->orderby('submenus.id')->get();
                         @endphp
 
                         @foreach($submenu as $sm)

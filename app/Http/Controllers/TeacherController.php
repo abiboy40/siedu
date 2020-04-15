@@ -54,7 +54,6 @@ class TeacherController extends Controller
         //Cek File Foto
         if ($request->hasFile('foto')) {
             $namaFile = $_FILES['foto']['name'];
-            $ukuranFile = $_FILES['foto']['size'];
             $error = $_FILES['foto']['error'];
             $temp = $_FILES['foto']['tmp_name'];
 
@@ -65,7 +64,7 @@ class TeacherController extends Controller
             $ekstensiFile = explode('.', $namaFile);
             $ekstensiFile = strtolower(end($ekstensiFile));
             $lokasiFile = base_path() . '\public\adminlte\img';
-            // 'D:/Belajar/Laravel/si_edu/public/adminlte/img/';
+
 
             //mengubah nama file
             $namaBaru = uniqid();
@@ -108,7 +107,7 @@ class TeacherController extends Controller
      */
     public function show($id)
     {
-        $data = User::find($id)->teacher;
+        $data = Teacher::find($id);
         // dd($data);
         return view('/profile', ['data' => $data]);
     }

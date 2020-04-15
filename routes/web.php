@@ -10,18 +10,40 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
 //Super Admin
 Route::group(['middleware' => ['auth', 'CheckRole:1']], function () {
+    //User
+    Route::get('/user', 'UserController@index');
+    Route::get('/user/{id}/edit', 'UserController@edit');
+    Route::post('/user/{id}/update', 'UserController@update');
+    Route::delete('/user/{id}', 'UserController@destroy');
+
+    //Role
     Route::get('/role', 'RoleController@index');
-    Route::get('{role}/edit', 'RoleController@edit')->name('editaccess');
-    Route::get('/Changeaccess', 'RoleController@changeaccess');
+    Route::get('/role/{role}/edit', 'RoleController@edit')->name('editaccess');
+    Route::get('/role/{id}/deactivated', 'RoleController@deactivated');
+    Route::get('/role/{id}/activated', 'RoleController@activated');
+
+    //User Access
     Route::post('/role/store', 'UseraccessController@store')->name('storeaccess');
     Route::delete('/role/{id}', 'UseraccessController@destroy')->name('menudelete');
+
+    //Menu
+    Route::get('/menu', 'MenuController@index');
+    Route::post('/menu', 'MenuController@store');
+    Route::get('/menu/{id}/edit', 'MenuController@show');
+    Route::get('/menu/{id}/activated', 'MenuController@activated');
+    Route::get('/menu/{id}/deactivated', 'MenuController@deactivated');
+
+    //Submenu
+    Route::get('/submenu/{id}/activated', 'SubmenuController@activated');
+    Route::get('/submenu/{id}/deactivated', 'SubmenuController@deactivated');
 });
 
 //School Admin
 Route::group(['middleware' => ['auth', 'CheckRole:1,5']], function () {
-    Route::get('/menu', 'MenuController@getSubMenu');
 });
 
 //Public
@@ -39,9 +61,9 @@ Route::get('/saveto_table', 'TeacherController@saveto_table')->name('TeacherSave
 
 //Teachers
 Route::get('/staff', 'HomeController@staff');
-Route::get('/teacher/{id}', 'TeacherController@show');
 Route::get('/teacher/create', 'TeacherController@create')->name('new_teacher');
 Route::post('/teacher', 'TeacherController@store')->name('teacher');
+Route::get('/teacher/{id}', 'TeacherController@show');
 
 //Students
 Route::get('/student/{id}', 'StudentController@profile');

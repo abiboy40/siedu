@@ -42,6 +42,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-10">
+                                        <a href="/staff" class="btn btn-secondary"> Cancel</a>
                                         <button type="submit" class="btn btn-primary">Upload</button>
                                     </div>
                                 </div>

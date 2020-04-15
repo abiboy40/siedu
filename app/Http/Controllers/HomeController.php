@@ -30,6 +30,15 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        $role = Role::find(Auth::user()->role_id);
+        if ($role->is_active == 0) {
+            return redirect('logout');
+        }
+
+        if (Auth::user()->is_active == 0) {
+            return redirect('logout');
+        }
+
         return view('admin.dashboard');
     }
 

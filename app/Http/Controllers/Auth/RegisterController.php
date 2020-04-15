@@ -81,6 +81,6 @@ class RegisterController extends Controller
             'departement' => $data['departement']
         ]);
 
-        return  redirect('/login');
+        return  $user;
     }
 }

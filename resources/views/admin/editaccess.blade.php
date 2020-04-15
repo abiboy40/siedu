@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Role: {{ $data->role_name }}</h3>
-                    <a href="{{url('/role')}}" class=" btn btn-warning float-right">Back</a>
+                    <a href="{{url('/role')}}" class=" btn btn-light float-right"><i class="fas fa-backward"></i></a>
                 </div>
                 <div class="card-body">
                     @if (session('status'))
@@ -19,15 +19,15 @@
                         @csrf
                         <input name="roleid" type="hidden" value="{{ $data->id }}">
                         <div class="form-group">
-                            <label for="menulist"></label>
-                            <select class="form-control" name="menulist" id="menulist">
+                            <label for="menulist">Available Menu</label>
+                            <select class="custom-select" name="menulist" id="menulist">
                                 @foreach($allmenu as $all)
                                 <option data-id="{{ $all->menu_id }}" value="{{ $all->id }}">{{ $all->name }}</option>
                                 @endforeach
                             </select>
                             <input type="hidden" id="txtmenu" name="txtmenu">
                         </div>
-                        <button type="submit" class="badge badge-success pt-1">Add</button>
+                        <button type="submit" class="badge badge-success pt-1"><i class="fas fa-plus"></i></button>
                     </form>
                 </div>
             </div>
@@ -37,7 +37,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Available Menu</h3>
+                    <h3 class="card-title">Selected Menu</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
@@ -58,7 +58,7 @@
                                     <form action="/role/{{ $m->id}}" method="post" class="d-inline">
                                         @method('delete')
                                         @csrf
-                                        <button type="submit" class="badge badge-pill badge-warning" onclick="return confirm('Yakin ingin dihapus?;')">Delete</button>
+                                        <button type="submit" class="badge badge-warning" onclick="return confirm('Yakin ingin dihapus?;')"><i class="far fa-trash-alt"></i></button>
                                     </form>
                                 </td>
 

@@ -5,32 +5,36 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">User Role</h3>
+                    <h3 class="card-title">Menu Management</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
+                    @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                    @endif
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Role Name</th>
+                                <th>Menu Name</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($roles as $role)
+                            @foreach($menu as $m)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $role->role_name }}</td>
+                                <td>{{ $m->name }}</td>
                                 <td>
-                                    @if($role->is_active == 1)
-                                    <a href="/role/{{ $role->id }}/edit" class="badge badge-pill badge-primary">Acsess</a>
-                                    <a href="/role/{{ $role->id }}/deactivated" class="badge badge-pill badge-danger" aria-disabled="true"> Deactivated</a>
+                                    @if($m->is_active == 1)
+                                    <a href="/menu/{{ $m->id }}/edit" class="btn btn-sm btn-primary"><i class="fas fa-info-circle"></i></a>
+                                    <a href="/menu/{{ $m->id }}/deactivated" class="btn btn-sm btn-danger"><i class="fas fa-power-off"></i></a>
                                     @else
-                                    <a href="/role/{{ $role->id }}/activated" class="badge badge-pill badge-success"> Activated</a>
+                                    <a href="/menu/{{ $m->id }}/activated" class="btn btn-sm btn-success"><i class="fas fa-power-off"></i></a>
                                     @endif
                                 </td>
-                                <td></td>
                             </tr>
                             @endforeach
                         </tbody>
