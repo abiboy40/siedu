@@ -66,4 +66,5 @@ Route::post('/teacher', 'TeacherController@store')->name('teacher');
 Route::get('/teacher/{id}', 'TeacherController@show');
 
 //Students
+Route::get('/student', 'StudentController@index');
 Route::get('/student/{id}', 'StudentController@profile');
