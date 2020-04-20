@@ -9,6 +9,11 @@ use App\Models\Teacher;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+//mail
+use DB;
+use Mail;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -82,5 +87,43 @@ class RegisterController extends Controller
         ]);
 
         return  $user;
+    }
+
+    //mail
+    public function Register(Request $request)
+    {
+        $input = $request->all();
+        $validator = $this->validator($input);
+
+        if($validator->passes()){
+            $user = $this->create($input)->toArray();
+            $user['link'] = Str::random(30);
+
+            DB::table('users_activations')->insert(['id_user' => $user['id'],'token' => $user['link']]);
+            Mail::send('mail.activation',$user,function($message) use($user) {
+                $message->to($user['email']);
+                $message->subject('No-Reply - Activation Email');
+
+            });
+            return redirect()->to('login')->with('message' , "We send activation code, please check your email");
+        }
+        return back()->with('Error',$validator->error());
+    }
+
+    public function userActivation($token)
+    {
+        $check = DB::table('users_activations')->where('token', $token)->first();
+        if (!is_null($check))
+        {
+            $user = User::find($check->id_user);
+            if($user->is_active == 1)
+            {
+                return redirect()->to('login')->with('message', "User are already actived");
+            }
+            $user->update(['is_active' => 1]);
+            DB::table('users_activations')->where('token', $token)->delete();
+            return redirect()->to('login')->with('message', "User Actived");
+        }
+        return redirect()->to('login')->with('message',"Your token invalid");
     }
 }

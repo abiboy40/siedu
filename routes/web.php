@@ -10,6 +10,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Auth::routes(['verify' => true]);
+
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 //Super Admin
@@ -67,3 +69,7 @@ Route::get('/teacher/{id}', 'TeacherController@show');
 
 //Students
 Route::get('/student/{id}', 'StudentController@profile');
+
+//mail
+// Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/user/activation/{token}', 'Auth\RegisterController@userActivation');
