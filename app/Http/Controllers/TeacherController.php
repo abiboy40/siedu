@@ -73,6 +73,8 @@ class TeacherController extends Controller
 
             //upload fie
             move_uploaded_file($temp, $lokasiFile . '/' . $namaBaru);
+        } else {
+            $namaBaru = 'no_photo.png';
         }
 
 
@@ -153,7 +155,8 @@ class TeacherController extends Controller
             $user = User::create([
                 'name' => $data->name,
                 'email' => $data->email,
-                'password' => Hash::make('password')
+                'password' => Hash::make('password'),
+                'role_id' => 2
             ]);
 
             Teacher::create(

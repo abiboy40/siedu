@@ -22,6 +22,15 @@ class ImportExcelController extends Controller
         return view('import_excel', ['data' => $data, 'user' => $user, 'school' => $school]);
     }
 
+    function impStudent()
+    {
+        $data = DB::table('temp_users')->get();
+        $user = User::find(Auth::user()->id)->student;
+        dd($user);
+        $school = School::all();
+        return view('school.import_student', ['data' => $data, 'user' => $user, 'school' => $school]);
+    }
+
     function import(Request $request)
     {
         // dd($request->all());

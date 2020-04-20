@@ -7,6 +7,7 @@ use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -22,6 +23,81 @@ class StudentController extends Controller
             // dd($data);
             return view('school.student', compact('data'));
         }
+    }
+
+    public function store(Request $request)
+    {
+        // dd($request->all());
+        $request->validate([
+            'nis' => 'required',
+            'grade' => 'required',
+            'name' => 'required',
+            'place' => 'required',
+            'date' => 'required',
+            'address' => 'required',
+            'email' => 'required|email:rfc,dns',
+            'parent_email' => 'required|email:rfc,dns',
+            'foto' => 'image|mimes:png,jpg,jpeg,gif|max:200'
+        ]);
+        //Cek File Foto
+        if ($request->hasFile('foto')) {
+            $namaFile = $_FILES['foto']['name'];
+            $error = $_FILES['foto']['error'];
+            $temp = $_FILES['foto']['tmp_name'];
+
+            if ($error == 4) {
+                return false;
+            }
+
+            $ekstensiFile = explode('.', $namaFile);
+            $ekstensiFile = strtolower(end($ekstensiFile));
+            $lokasiFile = base_path() . '\public\adminlte\img';
+
+
+            //mengubah nama file
+            $namaBaru = uniqid();
+            $namaBaru .= '.';
+            $namaBaru .= $ekstensiFile;
+
+            //upload fie
+            move_uploaded_file($temp, $lokasiFile . '/' . $namaBaru);
+        } else {
+            $namaBaru = 'no_photo.png';
+        }
+
+
+        $user = User::create([
+            'name' => request('name'),
+            'email' => request('email'),
+            'password' => Hash::make('password'),
+            'role_id' => 4
+        ]);
+
+        Student::create(
+            [
+                'school_id' => request('schoolId'),
+                'user_id' => $user->id,
+                'nis' => request('nis'),
+                'name' => request('name'),
+                'place_of_birth' => request('place'),
+                'date_of_birth' => request('date'),
+                'address' => request('address'),
+                'student_email' => request('email'),
+                'father_name' => request('father'),
+                'mother_name' => request('mother'),
+                'parent_email' => request('parent_email'),
+                'foto' => $namaBaru
+            ]
+        );
+
+        $user = User::create([
+            'name' => request('father'),
+            'email' => request('parent_email'),
+            'password' => Hash::make('password'),
+            'role_id' => 4
+        ]);
+
+        return redirect('/student')->with('status', 'New Data Added!');
     }
 
     public function profile($id)

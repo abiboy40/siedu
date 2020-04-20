@@ -1,20 +1,17 @@
 @extends('layouts.main')
-
 @section('content')
 <!-- Main content -->
 <section class="content">
     <div class="row">
         <div class="col-md-9">
-            <h3>Contacts</h3>
+            <h3>Students</h3>
         </div>
-        <div class="col-md-2">
-            <a href="{{ route('importExcel') }}" class="btn btn-primary"> <i class="fas fa-cloud-upload-alt"></i> Import Excel</i></a>
-        </div>
-        <div class="col-md-1">
+        <div class="col-md-3 float-right">
             <!-- Button trigger modal -->
-            <a href="{{ route('new_teacher') }}" class="btn btn-primary"> <i class="far fa-plus-square"></i></a>
-            <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop"> -->
-            <!-- </button> -->
+            <a href="/student/import" class="btn btn-primary"> <i class="fas fa-cloud-upload-alt"></i> Import Excel</i></a>
+            <!-- <a href="{{ route('new_teacher') }}" class="btn btn-primary"> </a> -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newStudent"><i class="far fa-plus-square"></i>
+            </button>
         </div>
     </div>
     @if (session('status'))
@@ -86,71 +83,108 @@
 </div>
 <!-- /.content-wrapper -->
 <!-- Modal -->
-<!-- Modal -->
-<!-- <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="newStudent" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="newStudentLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">New Staff</h5>
+                <h5 class="modal-title" id="newStudentLabel">New student</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form role="form" action="{{ route('teacher') }}" method="post" enctype="multipart/form-data">
+                <form role="form" action="/student" method="post" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="schoolId" value="{{ $dt->school_id}}">
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="nip">Employee Id</label>
-                            <input type="text" class="form-control" id="nip" name="nip" value="{{ old('nip') }}">
+                        <div class="form-row">
+                            <div class="form-group col-md-8">
+                                <label for="nis">NIS</label>
+                                <input type="text" class="form-control @error('nis') is-invalid @enderror" id="nis" name="nis" value="{{ old('nis') }}">
+                                @error('nis')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="grade">Grade</label>
+                                <input type="text" class="form-control @error('grade') is-invalid @enderror" id="grade" name="grade" value="{{ old('grade') }}">
+                                @error('grade')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="name">Employee Name</label>
-                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+                            <label for="name">Student Name</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}">
+                            @error('name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="place">Place of Birth</label>
+                                <input type="text" class="form-control @error('place') is-invalid @enderror" id="place" name="place" value="{{ old('place') }}">
+                                @error('place')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="date">Date of Birth</label>
+                                <input type="text" class="form-control @error('date') is-invalid @enderror" id="date" name="date" value="{{ old('date') }}" placeholder="yyyy-mm-dd">
+                                @error('date')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="address">Address</label>
-                            <input type="text" class="form-control" id="address" name="address" value="{{ old('address') }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email address</label>
-                            <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}">
+                            <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ old('address') }}">
+                            @error('address')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-7">
+                                <label for="email">Email address</label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}">
+                                @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-5">
                                 <label for="telp">Telp</label>
                                 <input type="text" class="form-control" id="telp" name="telp" value="{{ old('telp') }}">
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="telp2">Telp 2</label>
-                                <input type="text" class="form-control" id="telp2" name="telp2" value="{{ old('telp2') }}">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="father">Father's Name</label>
+                                <input type="text" class="form-control" id="father" name="father" value="{{ old('father') }}">
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="fax">Status</label>
-                                <select id="Status" class="form-control" name="curriculum">
-                                    <option>Choose...</option>
-                                    <option value="permanent">permanent</option>
-                                    <option value="Honorer">Honorer</option>
-                                </select>
+                            <div class="form-group col-md-6">
+                                <label for="mother">Mother's Name</label>
+                                <input type="text" class="form-control" id="mother" name="mother" value="{{ old('mother') }}">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="departemen">Departemen</label>
-                                <select id="departemen" class="form-control" name="departemen">
-                                    <option>Choose...</option>
-                                    <option value="Administration">Administration</option>
-                                    <option value="Teacher">Teacher</option>
-                                </select>
+                                <label for="parent_email">Parent Email</label>
+                                <input type="email" id="parent_email" name="parent_email" class="form-control @error('parent_email') is-invalid @enderror" value="{{ old('parent_email') }}">
+                                @error('parent_email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="exampleInputFile">Profile Foto</label>
-                                <input type="file" class="form-control-file" id="exampleInputFile">
+                                <label for="foto">Profile Foto</label>
+                                <input type="file" class="form-control-file @error('foto') is-invalid @enderror" id="foto" name="foto">
+                                @error('foto')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
-                    </div> -->
-<!-- /.card-body -->
-<!-- </div>
+                    </div>
+                    <!-- /.card-body -->
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <button type="submit" class="btn btn-primary">Save</button>
@@ -158,5 +192,5 @@
             </div>
         </div>
     </div>
-</div> -->
+</div>
 @endsection
