@@ -10,6 +10,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Auth::routes(['verify' => true]);
+
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 //Super Admin
@@ -53,20 +55,25 @@ Route::post('school', 'SchoolController@store');
 Route::get('/profile/{id}', 'HomeController@profile');
 
 //Import from Excel file
-Route::get('/import', 'ImportExcelController@index')->name('importExcel');
 Route::post('import/import_data', 'ImportExcelController@import')->name('startImport');
 Route::get('import/clear_data', 'ImportExcelController@clear')->name('cleardata');
 Route::get('/saveto_table', 'TeacherController@saveto_table')->name('TeacherSave');
 
 
 //Teachers
-Route::get('/staff', 'HomeController@staff');
+Route::get('/staff', 'TeacherController@index');
 Route::get('/teacher/create', 'TeacherController@create')->name('new_teacher');
 Route::post('/teacher', 'TeacherController@store')->name('teacher');
+Route::get('/teacher/import', 'ImportExcelController@index')->name('importExcel');
 Route::get('/teacher/{id}', 'TeacherController@show');
 
 //Students
-Route::get('/student/import', 'ImportExcelController@impStudent');
 Route::get('/student', 'StudentController@index');
 Route::post('/student', 'StudentController@store');
-Route::get('/student/{id}', 'StudentController@profile');
+Route::get('/student/import', 'ImportExcelController@index');
+Route::get('/student/save', 'StudentController@saveto_table')->name('StudentSave');
+Route::get('/student/{id}', 'StudentController@show');
+
+//mail
+// Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/user/activation/{token}', 'Auth\RegisterController@userActivation');

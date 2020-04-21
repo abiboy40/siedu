@@ -104,8 +104,8 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label for="num_of_Staff">Num of Staff</label>
-                                        <input type="text" class="form-control" id="num_of_Staff" name="num_of_Staff" value="{{ old('num_of_Staff') }}">
+                                        <label for="num_of_staff">Num of Staff</label>
+                                        <input type="text" class="form-control" id="num_of_staff" name="num_of_staff" value="{{ old('num_of_staff') }}">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label for="num_of_student">Num of Student</label>

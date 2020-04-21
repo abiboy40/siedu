@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
+use App\Models\TempUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class StudentController extends Controller
 {
@@ -18,11 +21,19 @@ class StudentController extends Controller
             return view('school.student', compact('data'));
         } elseif (Auth::user()->role_id == 2 || Auth::user()->role_id == 3 || Auth::user()->role_id == 5) {
             $schoolId = User::find(Auth::user()->id)->teacher;
-
+            // dd($schoolId);
             $data = Student::where('school_id', $schoolId->school_id)->get();
-            // dd($data);
+
+            if ($data->count() == 0) {
+                return view('school.student', ['school' => $schoolId, 'data' => $data]);
+            }
             return view('school.student', compact('data'));
         }
+
+        $data = Student::where('user_id', '=', Auth::user()->id)
+            ->orwhere('parent_email', Auth::user()->email)->get();
+        // dd($data);
+        return view('school.student', compact('data'));
     }
 
     public function store(Request $request)
@@ -100,9 +111,52 @@ class StudentController extends Controller
         return redirect('/student')->with('status', 'New Data Added!');
     }
 
-    public function profile($id)
+    public function show($id)
     {
-        $data = Student::find($id);
+
+        $data = Student::findorFail($id);
         return view('school.studentprofile', compact('data'));
+    }
+
+    public function saveto_table()
+    {
+        foreach (TempUser::cursor() as $data) {
+            // dd($data);
+            $user = User::create([
+                'name' => $data->name,
+                'email' => $data->email,
+                'password' => Hash::make('password'),
+                'role_id' => 4,
+                'is_active' => 1
+            ]);
+
+            Student::create(
+                [
+                    'user_id' => $user->id,
+                    'school_id' => $data->schoolId,
+                    'nis' => $data->id_number,
+                    'name' => $data->name,
+                    'place_of_birth' => $data->place,
+                    'date_of_birth' => $data->date,
+                    'address' => $data->address,
+                    'student_email' => $data->email,
+                    'parent_email' => $data->parent_email
+                ]
+            );
+
+            $email = User::where('email', $data->parent_email)->get();
+
+            if ($email->count() == 0) {
+                User::create([
+                    'name' => $data->name,
+                    'email' => $data->parent_email,
+                    'password' => Hash::make('password'),
+                    'role_id' => 4,
+                    'is_active' => 1
+                ]);
+            }
+        }
+        DB::table('temp_users')->truncate();
+        return back()->with('status', 'Data Successfully Saved!');
     }
 }

@@ -45,4 +45,11 @@ class LoginController extends Controller
         Auth::logout();
         return redirect('login');
     }
+
+    //mail
+    public function credentials(Request $request)
+    {
+        $request['is_active'] = 1;
+        return $request->only('email', 'password', 'is_active');
+    }
 }

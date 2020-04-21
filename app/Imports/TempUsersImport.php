@@ -20,6 +20,8 @@ class TempUsersImport implements ToModel, WithHeadingRow
             'name' => $row['name'],
             'email' => $row['email'],
             'address' => $row['address'],
+            'place' => $row['place'],
+            'date' => $row['date'],
             'parent_email' => $row['parent_email'],
             'departement' => $row['departement'],
         ]);

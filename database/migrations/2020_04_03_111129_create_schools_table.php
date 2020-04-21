@@ -23,7 +23,7 @@ class CreateSchoolsTable extends Migration
             $table->string('email')->unique();
             $table->string('curriculum');
             $table->string('num_of_student');
-            $table->string('num_of_Staff');
+            $table->string('num_of_staff');
             $table->timestamps();
         });
     }

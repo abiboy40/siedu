@@ -14,20 +14,15 @@ use App\Models\TempUser;
 
 class ImportExcelController extends Controller
 {
-    function index()
+    function index(Request $request)
     {
         $data = DB::table('temp_users')->get();
         $user = User::find(Auth::user()->id)->teacher;
         $school = School::all();
-        return view('import_excel', ['data' => $data, 'user' => $user, 'school' => $school]);
-    }
 
-    function impStudent()
-    {
-        $data = DB::table('temp_users')->get();
-        $user = User::find(Auth::user()->id)->student;
-        dd($user);
-        $school = School::all();
+        if ($request->is('teacher/*')) {
+            return view('import_excel', ['data' => $data, 'user' => $user, 'school' => $school]);
+        }
         return view('school.import_student', ['data' => $data, 'user' => $user, 'school' => $school]);
     }
 
@@ -38,6 +33,7 @@ class ImportExcelController extends Controller
             'filename' => 'required|mimes:xls,xlsx'
         ]);
 
+        DB::table('temp_users')->truncate();
         Excel::import(new TempUsersImport(), $request->file('filename'));
 
         $data = TempUser::all();

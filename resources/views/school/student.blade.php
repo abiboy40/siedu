@@ -7,11 +7,11 @@
             <h3>Students</h3>
         </div>
         <div class="col-md-3 float-right">
-            <!-- Button trigger modal -->
+            @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 5)
             <a href="/student/import" class="btn btn-primary"> <i class="fas fa-cloud-upload-alt"></i> Import Excel</i></a>
-            <!-- <a href="{{ route('new_teacher') }}" class="btn btn-primary"> </a> -->
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newStudent"><i class="far fa-plus-square"></i>
             </button>
+            @endif
         </div>
     </div>
     @if (session('status'))
@@ -23,6 +23,7 @@
     <div class="card card-solid">
         <div class="card-body pb-0">
             <div class="row d-flex align-items-stretch">
+                @if($data->count() !=0)
                 @foreach($data as $dt)
                 <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
                     <div class="card bg-light">
@@ -57,6 +58,7 @@
                     </div>
                 </div>
                 @endforeach
+                @endif
             </div>
         </div>
         <!-- /.card-body -->
@@ -95,7 +97,11 @@
             <div class="modal-body">
                 <form role="form" action="/student" method="post" enctype="multipart/form-data">
                     @csrf
+                    @if($data->count() !=0)
                     <input type="hidden" name="schoolId" value="{{ $dt->school_id}}">
+                    @else
+                    <input type="hidden" name="schoolId" value="{{ $school->school_id}}">
+                    @endif
                     <div class="card-body">
                         <div class="form-row">
                             <div class="form-group col-md-8">

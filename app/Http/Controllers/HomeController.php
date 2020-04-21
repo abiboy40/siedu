@@ -42,23 +42,14 @@ class HomeController extends Controller
         return view('admin.dashboard');
     }
 
-    public function staff()
-    {
-        $teacher = Teacher::all();
-        return view('school.teacher', compact('teacher'));
-    }
-
     public function profile($id)
     {
         $role = Auth::user()->role_id;
         // dd($role);
-        if ($role == 1) {
-            $data = User::find($id);
-            return view('/profile', ['data' => $data]);
-        } elseif ($role == 2 || $role == 3 || $role == 5) {
+        if ($role == 2 || $role == 3 || $role == 5) {
             return Redirect('/teacher/' . $id);
         }
 
-        return redirect('/student/$id');
+        return redirect('/student');
     }
 }

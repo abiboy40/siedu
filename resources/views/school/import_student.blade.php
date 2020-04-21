@@ -60,6 +60,8 @@
                                 <th scope="col">No</th>
                                 <th scope="col">NIS</th>
                                 <th scope="col">Name</th>
+                                <th scope="col">Place of Birth</th>
+                                <th scope="col">Date of Birth</th>
                                 <th scope="col">Address</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Parent's Email</th>
@@ -71,16 +73,18 @@
                                 <th scope="row">{{ $loop->iteration }}</th>
                                 <td>{{ $data->id_number }}</td>
                                 <td>{{ $data->name }}</td>
+                                <td>{{ $data->place }}</td>
+                                <td>{{ $data->date }}</td>
                                 <td>{{ $data->address }}</td>
                                 <td>{{ $data->email }}</td>
-                                <td>{{ $data->departement }}</td>
+                                <td>{{ $data->parent_email }}</td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                     <div class="mt-1 float-right">
                         <a href="{{ route('cleardata') }}" class="btn btn-flat btn-primary">Clear</a>
-                        <a href="{{ route('TeacherSave') }}" class="btn btn-flat btn-primary">Save</a>
+                        <a href="{{ route('StudentSave') }}" class="btn btn-flat btn-primary">Save</a>
                     </div>
                 </div>
             </div>

@@ -20,7 +20,8 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        //
+        $teacher = Teacher::all();
+        return view('school.teacher', compact('teacher'));
     }
 
     /**
@@ -109,8 +110,7 @@ class TeacherController extends Controller
      */
     public function show($id)
     {
-        $data = Teacher::find($id);
-        // dd($data);
+        $data = User::find($id)->teacher;
         return view('/profile', ['data' => $data]);
     }
 

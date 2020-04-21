@@ -32,6 +32,13 @@
                 <p class="login-box-msg">Login</p>
                 <form action="{{ route('login') }}" method="post">
                     @csrf
+
+                    @if(session()->has('message'))
+                            <div class="alert alert-success">
+                                {{ session()->get('message') }}
+                            </div>
+                        @endif
+                        
                     <div class="input-group mb-3">
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
@@ -87,7 +94,7 @@
                 </p>
                 <p class="mb-0">
                     @if (Route::has('register'))
-                    <a href="{{ url('\school') }}" class="text-center">{{ __('Register') }}</a>
+                    <a href="{{ url('school') }}" class="text-center">{{ __('Register') }}</a>
                     @endif
                 </p>
             </div>

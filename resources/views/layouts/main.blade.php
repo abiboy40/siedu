@@ -58,10 +58,12 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/profile/{{ Auth::user()->id }}">
+                        @if(Auth::user()->role_id != 1)
+                        <a href="/profile/{{ Auth::user()->id }}" class="dropdown-item">
                             <i class="far fa-id-card"></i>
                             <b> Profile</b> </a>
-                        <hr>
+                        <div class="dropdown-divider"></div>
+                        @endif
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                             <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
@@ -92,9 +94,15 @@
                     <div class="image">
                         <img src="/adminlte/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
+                    @if(Auth::user()->role_id == 1)
+                    <div class="info">
+                        <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                    </div>
+                    @else
                     <div class="info">
                         <a href="/profile/{{ Auth::user()->id }}" class="d-block">{{ Auth::user()->name }}</a>
                     </div>
+                    @endif
                 </div>
 
                 <!-- Sidebar Menu -->
