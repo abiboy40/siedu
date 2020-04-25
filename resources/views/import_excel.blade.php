@@ -38,6 +38,7 @@
                                         @error('filename')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
+                                        <a href={{ asset('sample/StaffSampleFile.xlsx') }}>*contoh format file excel</a>
                                     </div>
                                 </div>
                                 <div class="form-group row">
