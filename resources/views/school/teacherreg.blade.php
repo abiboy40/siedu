@@ -29,19 +29,37 @@
                             </select>
                         </div>
                         @endif
-                        <div class="form-group">
-                            <label for="nip">Employee Id</label>
-                            <input type="text" class="form-control @error('nip') is-invalid @enderror" id="nip" name="nip" value="{{ old('nip') }}">
-                            @error('nip')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="nip">Employee Id</label>
+                                <input type="text" class="form-control @error('nip') is-invalid @enderror" id="nip" name="nip" value="{{ old('nip') }}">
+                                @error('nip')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label for="name">Employee Name</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}">
+                                @error('name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="name">Employee Name</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}">
-                            @error('name')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="place">Place of Birth</label>
+                                <input type="text" class="form-control @error('place') is-invalid @enderror" id="place" name="place" value="{{ old('place') }}">
+                                @error('place')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="date">Date of Birth</label>
+                                <input type="text" class="form-control @error('date') is-invalid @enderror" id="date" name="date" value="{{ old('date') }}">
+                                @error('date')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="address">Address</label>

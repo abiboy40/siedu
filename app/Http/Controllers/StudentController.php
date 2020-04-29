@@ -6,6 +6,7 @@ use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
 use App\Models\TempUser;
+use Dotenv\Result\Success;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -116,6 +117,64 @@ class StudentController extends Controller
 
         $data = Student::findorFail($id);
         return view('school.studentprofile', compact('data'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // dd($request->all());
+        $request->validate([
+            'inputNIS' => 'required',
+            'inputGrade' => 'required',
+            'inputName' => 'required',
+            'inputPlace' => 'required',
+            'inputDate' => 'required',
+            'inputAddress' => 'required',
+            'inputEmail' => 'required|email:rfc,dns',
+            'inputEmail2' => 'required|email:rfc,dns',
+            'foto' => 'image|mimes:png,jpg,jpeg,gif|max:200'
+        ]);
+        //Cek File Foto
+        if ($request->hasFile('foto')) {
+            $namaFile = $_FILES['foto']['name'];
+            $error = $_FILES['foto']['error'];
+            $temp = $_FILES['foto']['tmp_name'];
+
+            if ($error == 4) {
+                return false;
+            }
+
+            $ekstensiFile = explode('.', $namaFile);
+            $ekstensiFile = strtolower(end($ekstensiFile));
+            $lokasiFile = base_path() . '\public\adminlte\img';
+
+
+            //mengubah nama file
+            $namaBaru = uniqid();
+            $namaBaru .= '.';
+            $namaBaru .= $ekstensiFile;
+
+            //upload fie
+            move_uploaded_file($temp, $lokasiFile . '/' . $namaBaru);
+        } else {
+            $namaBaru = 'no_photo.png';
+        }
+
+        Student::where('id', $id)
+            ->update([
+                'nis' => request('inputNIS'),
+                'grade' => request('inputGrade'),
+                'name' => request('inputName'),
+                'place_of_birth' => request('inputPlace'),
+                'date_of_birth' => request('inputDate'),
+                'address' => request('inputAddress'),
+                'student_email' => request('inputEmail'),
+                'father_name' => request('inputFather'),
+                'mother_name' => request('inputMother'),
+                'parent_email' => request('inputEmail2'),
+                'foto' => $namaBaru
+            ]);
+
+        return back()->with('status', 'Data Updated!!');
     }
 
     public function saveto_table()

@@ -47,7 +47,8 @@ class HomeController extends Controller
         $role = Auth::user()->role_id;
         // dd($role);
         if ($role == 2 || $role == 3 || $role == 5) {
-            return Redirect('/teacher/' . $id);
+            $data = User::find($id)->teacher;
+            return view('/profile', compact('data'));
         }
 
         return redirect('/student');

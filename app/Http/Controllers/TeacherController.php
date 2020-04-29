@@ -20,7 +20,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teacher = Teacher::all();
+        $teacher = Teacher::where('school_id', Auth::user()->teacher->school_id)->get();
         return view('school.teacher', compact('teacher'));
     }
 
@@ -91,7 +91,11 @@ class TeacherController extends Controller
                 'school_id' => request('schoolId'),
                 'nip' => request('nip'),
                 'name' => request('name'),
+                'place' => request('place'),
+                'date' => request('date'),
                 'address' => request('address'),
+                'telp1' => request('telp'),
+                'telp2' => request('telp2'),
                 'email' => request('email'),
                 'departement' => request('departement'),
                 'status' => request('status'),
@@ -110,7 +114,7 @@ class TeacherController extends Controller
      */
     public function show($id)
     {
-        $data = User::find($id)->teacher;
+        $data = Teacher::find($id);
         return view('/profile', ['data' => $data]);
     }
 
@@ -134,7 +138,57 @@ class TeacherController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request->all());
+        $request->validate([
+            'inputNIP' => 'required',
+            'inputName' => 'required',
+            'inputEmail' => 'email:rfc,dns',
+            'foto' => 'image|mimes:png,jpg,jpeg,gif|max:200'
+        ]);
+        //Cek File Foto
+        if ($request->hasFile('foto')) {
+            $namaFile = $_FILES['foto']['name'];
+            $error = $_FILES['foto']['error'];
+            $temp = $_FILES['foto']['tmp_name'];
+
+            if ($error == 4) {
+                return false;
+            }
+
+            $ekstensiFile = explode('.', $namaFile);
+            $ekstensiFile = strtolower(end($ekstensiFile));
+            $lokasiFile = base_path() . '\public\adminlte\img';
+
+
+            //mengubah nama file
+            $namaBaru = uniqid();
+            $namaBaru .= '.';
+            $namaBaru .= $ekstensiFile;
+
+            //upload fie
+            move_uploaded_file($temp, $lokasiFile . '/' . $namaBaru);
+        } else {
+            $namaBaru = 'no_photo.png';
+        }
+
+        Teacher::where('id', $id)
+            ->update(
+                [
+                    'nip' => request('inputNIP'),
+                    'name' => request('inputName'),
+                    'place' => request('inputPlace'),
+                    'date' => request('inputDate'),
+                    'address' => request('inputAddress'),
+                    'telp1' => request('inputTelp'),
+                    'telp2' => request('inputTelp2'),
+                    'email' => request('inputEmail'),
+                    'departement' => request('departement'),
+                    'status' => request('status'),
+                    'foto' => $namaBaru
+                ]
+            );
+
+        return redirect('/staff')->with('status', 'Data Successfully Updated!');
     }
 
     /**

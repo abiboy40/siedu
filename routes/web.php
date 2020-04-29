@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\UseraccessController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:1']], function () {
     //Submenu
     Route::get('/submenu/{id}/activated', 'SubmenuController@activated');
     Route::get('/submenu/{id}/deactivated', 'SubmenuController@deactivated');
+    // Route::resource('submenu', 'SubmenuController');
 });
 
 //School Admin
@@ -66,13 +68,25 @@ Route::get('/teacher/create', 'TeacherController@create')->name('new_teacher');
 Route::post('/teacher', 'TeacherController@store')->name('teacher');
 Route::get('/teacher/import', 'ImportExcelController@index')->name('importExcel');
 Route::get('/teacher/{id}', 'TeacherController@show');
+Route::put('/teacher/{id}', 'TeacherController@update');
 
 //Students
-Route::get('/student', 'StudentController@index');
-Route::post('/student', 'StudentController@store');
+Route::resource('student', 'StudentController');
 Route::get('/student/import', 'ImportExcelController@index');
 Route::get('/student/save', 'StudentController@saveto_table')->name('StudentSave');
-Route::get('/student/{id}', 'StudentController@show');
+
+//Subject
+Route::resource('subject', 'SubjectController');
+Route::post('/subject/teacher', 'SubjectController@subjectteacher');
+
+//Classroom
+// Route::get('/classroom', 'ClassroomController@index');
+// Route::post('/classroom', 'ClassroomController@store');
+// Route::get('/classroom/{classroom}', 'ClassroomController@show');
+// Route::get('/classroom/{classroom}/edit', 'ClassroomController@edit');
+// Route::put('/classroom/{classroom}', 'ClassroomController@update');
+Route::resource('classroom', 'ClassroomController');
+Route::post('/classroom/addschedule', 'ClassroomController@addSchedule');
 
 //mail
 // Route::get('/home', 'HomeController@index')->name('home');

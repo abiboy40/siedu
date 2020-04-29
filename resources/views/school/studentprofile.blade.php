@@ -3,6 +3,11 @@
 @section('content')
 <section class="content">
     <div class="container-fluid">
+        @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+        @endif
         <div class="row">
             <div class="col-md-3">
 
@@ -47,9 +52,9 @@
 
                         <hr>
 
-                        <strong><i class="fas fa-map-marker-alt mr-1"></i> {{ $data->address }}</strong>
+                        <strong><i class="fas fa-map-marker-alt mr-1"></i> Address</strong>
 
-                        <p class="text-muted">Bekasi, Jawa Barat</p>
+                        <p class="text-muted">{{ $data->address }}</p>
 
                         <hr>
 
@@ -80,7 +85,7 @@
                         <ul class="nav nav-pills">
                             <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Score</a></li>
                             <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Update Profile</a></li>
                         </ul>
                         <div class="float-right">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop"><i class="far fa-plus-square"></i></button>
@@ -111,145 +116,76 @@
                             </div>
                             <!-- /.tab-pane -->
                             <div class="tab-pane" id="timeline">
-                                <!-- The timeline -->
-                                <div class="timeline timeline-inverse">
-                                    <!-- timeline time label -->
-                                    <div class="time-label">
-                                        <span class="bg-danger">
-                                            10 Feb. 2014
-                                        </span>
-                                    </div>
-                                    <!-- /.timeline-label -->
-                                    <!-- timeline item -->
-                                    <div>
-                                        <i class="fas fa-envelope bg-primary"></i>
-
-                                        <div class="timeline-item">
-                                            <span class="time"><i class="far fa-clock"></i> 12:05</span>
-
-                                            <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-
-                                            <div class="timeline-body">
-                                                Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                                                weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                                                jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                                                quora plaxo ideeli hulu weebly balihoo...
-                                            </div>
-                                            <div class="timeline-footer">
-                                                <a href="#" class="btn btn-primary btn-sm">Read more</a>
-                                                <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- END timeline item -->
-                                    <!-- timeline item -->
-                                    <div>
-                                        <i class="fas fa-user bg-info"></i>
-
-                                        <div class="timeline-item">
-                                            <span class="time"><i class="far fa-clock"></i> 5 mins ago</span>
-
-                                            <h3 class="timeline-header border-0"><a href="#">Sarah Young</a> accepted your friend request
-                                            </h3>
-                                        </div>
-                                    </div>
-                                    <!-- END timeline item -->
-                                    <!-- timeline item -->
-                                    <div>
-                                        <i class="fas fa-comments bg-warning"></i>
-
-                                        <div class="timeline-item">
-                                            <span class="time"><i class="far fa-clock"></i> 27 mins ago</span>
-
-                                            <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-
-                                            <div class="timeline-body">
-                                                Take me to your leader!
-                                                Switzerland is small and neutral!
-                                                We are more like Germany, ambitious and misunderstood!
-                                            </div>
-                                            <div class="timeline-footer">
-                                                <a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- END timeline item -->
-                                    <!-- timeline time label -->
-                                    <div class="time-label">
-                                        <span class="bg-success">
-                                            3 Jan. 2014
-                                        </span>
-                                    </div>
-                                    <!-- /.timeline-label -->
-                                    <!-- timeline item -->
-                                    <div>
-                                        <i class="fas fa-camera bg-purple"></i>
-
-                                        <div class="timeline-item">
-                                            <span class="time"><i class="far fa-clock"></i> 2 days ago</span>
-
-                                            <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-
-                                            <div class="timeline-body">
-                                                <img src="http://placehold.it/150x100" alt="...">
-                                                <img src="http://placehold.it/150x100" alt="...">
-                                                <img src="http://placehold.it/150x100" alt="...">
-                                                <img src="http://placehold.it/150x100" alt="...">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- END timeline item -->
-                                    <div>
-                                        <i class="far fa-clock bg-gray"></i>
-                                    </div>
-                                </div>
+                                Coming Soon
                             </div>
                             <!-- /.tab-pane -->
 
                             <div class="tab-pane" id="settings">
-                                <form class="form-horizontal">
+                                <form class="form-horizontal" action="/student/{{ $data->id }}" method="POST" enctype="multipart/form-data">
+                                    @method('put')
+                                    @csrf
                                     <div class="form-group row">
+                                        <label for="inputGrade" class="col-sm-2 col-form-label">Grade & NIS</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="inputGrade" name="inputGrade" value="{{ $data->grade }}">
+                                        </div>
+                                        <div class=" col-sm-7">
+                                            <input type="text" class="form-control" id="inputNIS" name="inputNIS" value="{{ $data->nis }}">
+                                        </div>
+                                    </div>
+                                    <div class=" form-group row">
                                         <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                                         <div class="col-sm-10">
-                                            <input type="email" class="form-control" id="inputName" placeholder="Name">
+                                            <input type="text" class="form-control" id="inputName" name="inputName" value="{{ $data->name }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputName2" class="col-sm-2 col-form-label">Birthday</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" id="inputPlace" name="inputPlace" value="{{ $data->place_of_birth }}">
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" id="inputDate" name="inputDate" value="{{ $data->date_of_birth }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                                         <div class="col-sm-10">
-                                            <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                                            <input type="email" class="form-control" id="inputEmail" name="inputEmail" value="{{ $data->student_email }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputName2" class="col-sm-2 col-form-label">Name</label>
+                                        <label for="inputAddress" class="col-sm-2 col-form-label">Address</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputName2" placeholder="Name">
+                                            <input class="form-control" id="inputAddress" name="inputAddress" value="{{ $data->address }}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="inputExperience" class="col-sm-2 col-form-label">Experience</label>
-                                        <div class="col-sm-10">
-                                            <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
+                                        <label for="inputSkills" class="col-sm-2 col-form-label">Parent Name</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" id="inputFather" name="inputFather" value="{{ $data->father_name }}">
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" id="inputMother" name="inputMother" value="{{ $data->mother_name }}">
                                         </div>
                                     </div>
+
                                     <div class="form-group row">
-                                        <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
+                                        <label for="inputEmail2" class="col-sm-2 col-form-label">Parent's Email</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
+                                            <input type="email" class="form-control" id="inputEmail2" name="inputEmail2" value="{{ $data->parent_email }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="foto" class="col-sm-2 col-form-label">Profile Foto</label>
+                                        <div class="col-sm-10">
+                                            <input type="file" class="form-control-file" id="foto" name="foto">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <div class="offset-sm-2 col-sm-10">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="offset-sm-2 col-sm-10">
-                                            <button type="submit" class="btn btn-danger">Submit</button>
+                                            <button type="submit" class="btn btn-primary">Update</button>
                                         </div>
                                     </div>
                                 </form>

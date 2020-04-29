@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Teacher extends Model
 {
 
-    protected $fillable = ['name', 'email', 'school_id', 'user_id', 'departement', 'foto'];
+    protected $fillable = [
+        'nip', 'name', 'place', 'date', 'address',
+        'telp1', 'telp2', 'email', 'school_id', 'user_id', 'departement', 'foto', 'status'
+    ];
 
     public function getPhoto()
     {
@@ -20,11 +23,16 @@ class Teacher extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     public function school()
     {
-        return $this->belongsTo('App\Models\School');
+        return $this->belongsTo(School::class);
+    }
+
+    public function subject()
+    {
+        return $this->hasMany(Subject::class);
     }
 }
